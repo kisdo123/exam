@@ -10,4 +10,8 @@
 		select * from user where id = #{id}
 	</select>
 	
+	<!--회원가입 id, pw, name을 입력받아 insert  -->
+	<insert id="joinUser" parameterType="User">
+		insert into user(id, pw, name) values (#{id}, #{pw}, #{name});
+	</insert>
 </mapper>

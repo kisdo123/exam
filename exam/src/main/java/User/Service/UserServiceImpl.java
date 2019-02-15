@@ -3,6 +3,7 @@ package User.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Exception.FailJoinUser;
 import Exception.PasswordNotMatch;
 import Exception.UserNotFoundException;
 import User.DAO.UserDAO;
@@ -13,6 +14,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDAO userDAO;
+	
 	
 	//로그인
 	public User login(String id, String pw) {
@@ -30,6 +32,17 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return user;
+	}
+	
+	//회원가입
+	public void join(User user) {
+		//회원가입
+		int res = userDAO.joinUser(user);
+		
+		if(res == 0 || res>1) {
+			throw new FailJoinUser("회원가입 실패");
+		}
+		
 	}
 
 }

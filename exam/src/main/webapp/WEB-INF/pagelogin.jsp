@@ -5,16 +5,18 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="/exam/css/pagelogin.css">
-<link rel="stylesheet" href="/exam/css/bootstrap.min">
+<link rel="stylesheet" href="/exam/css/bootstrap.min.css">
+<script type="text/javascript" src="/exam/script/pagejoin.js"></script>
 </head>
 <body class="text-center" oncontextmenu="return false" ondragstart="return false" onselect="return false">
 	<form action="login.do" method="post" class="form-signin">
-		<input type="text" id="inputID" class="form-control" placeholder="ID" name="id" value="${param.id }" required autofocus>
+		<input type="text" id="inputID" class="form-control" placeholder="ID" name="id" value="${param.id }" required>
+		<br>
 		<input type="password" id="inputPW" class="form-control" name="pw" value="${param.pw }" placeholder="PW" required>
-		<div id="buttonandsubmit">
-			<input class="btn btn-lg btn-primary btn-block" type="submit" value="로그인">
-			<input class="btn btn-lg btn-primary btn-block" id="signinbtn" type="button" value="회원가입">
-		</div>
+		<input class="btn btn-lg btn-primary btn-block" type="submit" value="로그인">
+		<br>
 	</form>
+	<button id="movejoinbtn" onclick="showJoinForm()">회원가입</button>
+	<jsp:include page="/popup/pagejoin.jsp"></jsp:include>
 </body>
 </html>

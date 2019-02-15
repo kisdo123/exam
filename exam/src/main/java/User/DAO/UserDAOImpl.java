@@ -15,6 +15,9 @@ public class UserDAOImpl implements UserDAO {
 		return userMapper.selectUserById(id);
 	}
 
-
+	//회원가입
+	public int joinUser(User user) {
+		return userMapper.joinUser(user);
+	}
 
 }

@@ -9,10 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.security.auth.login.FailedLoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +24,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mysql.cj.xdevapi.JsonArray;
 
+import Commute.DAO.CommuteDAO;
 import Commute.DTO.Commute;
 import Commute.DTO.DateData;
 import Commute.Service.CommuteService;
 import Exception.AlreadyAttend;
 import Exception.FailAttendCheck;
 import Exception.FailInsertCommute;
+import Exception.FailJoinUser;
 import Exception.FailUpdateCommute;
 import Exception.PasswordNotMatch;
 import Exception.UserNotFoundException;
@@ -43,10 +47,50 @@ public class MainController {
 	@Autowired
 	private CommuteService commuteService;
 
+	// loginFilter 결과페이지로 리턴
+	@RequestMapping("/loginFilter.do")
+	public String loginFilter(HttpServletRequest request) {
+		request.setAttribute("loginFilter", true);
+		return "result/pageFail";
+	}
+
 	// 로그인폼 요청
 	@RequestMapping("/loginForm.do")
 	public String loginForm(Model model) {
 		return "pagelogin";
+	}
+
+	// 회원가입폼 요청
+	@RequestMapping("/joinForm.do")
+	public String joinForm(Model model) {
+		return "pagejoin";
+	}
+
+	// 회원가입
+	@RequestMapping("/join.do")
+	public String join(Model model, HttpServletRequest request, @RequestParam("id") String id,
+			@RequestParam("pw") String pw, @RequestParam("name") String name) {
+		try {
+			// 객체 생성후 데이터 삽입
+			User user = new User();
+			user.setId(id);
+			user.setPw(pw);
+			user.setName(name);
+
+			// 회원가입
+			userService.join(user);
+			request.setAttribute("join", true);
+			return "result/pageSuccess";
+		} catch (FailJoinUser e) {
+			e.printStackTrace();
+			request.setAttribute("registerFail", true);
+			request.setAttribute("ret", "/exam/loginForm.do");
+		} catch (DuplicateKeyException e) {
+			e.printStackTrace();
+			request.setAttribute("userExist", true);
+			request.setAttribute("ret", "/exam/loginForm.do");
+		}
+		return "result/pageFail";
 	}
 
 	// 메인화면으로 보냄
@@ -70,19 +114,22 @@ public class MainController {
 
 		try {
 			// 출퇴근 insert
-			commuteService.commuteInsert(userNo);
-
-			return "Success/pageSuccess";
+			Commute comm = commuteService.commuteInsert(userNo);
+			String attendTime = comm.getAttend();
+			request.setAttribute("attend", true);
+			request.setAttribute("attendTime", attendTime);
+			return "result/pageSuccess";
+			
 		} catch (FailInsertCommute e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
-
+			request.setAttribute("FailInsertCommute", true);
+			request.setAttribute("ret", "/exam/main.do");
 		} catch (AlreadyAttend e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
+			request.setAttribute("AlreadyAttend", true);
+			request.setAttribute("ret", "/exam/main.do");
 		}
+		return "result/pageFail";
 
 	}
 
@@ -99,18 +146,19 @@ public class MainController {
 		try {
 			// 퇴근 update
 			commuteService.checkAndUpdate(userNo);
-			return "Success/pageSuccess";
-
+			request.setAttribute("leave", true);
+			return "result/pageSuccess";
 		} catch (FailAttendCheck e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
+			request.setAttribute("FailAttendCheck", true);
+			request.setAttribute("ret", "/exam/main.do");
 
 		} catch (FailUpdateCommute e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
+			request.setAttribute("FailUpdateCommute", true);
+			request.setAttribute("ret", "/exam/main.do");
 		}
+		return "result/pageFail";
 	}
 
 	// 달 이동
@@ -136,18 +184,20 @@ public class MainController {
 			dateData.setUserNo(userNo);
 
 			// 출근일을 가져온후 main에 보낸다.
-			List<Commute> comm = commuteService.Datecompare(dateData);
+			List<Commute> comm = commuteService.dateCompare(dateData);
 			model.addAttribute("comm", comm);
 			return "main";
+
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
+			request.setAttribute("CookieNotFoundException", true);
+			request.setAttribute("ret", "/exam/main.do");
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
+			request.setAttribute("CalendarException", true);
+			request.setAttribute("ret", "/exam/main.do");
 		}
+		return "result/pageFail";
 	}
 
 	// 로그인
@@ -181,19 +231,21 @@ public class MainController {
 			dateData.setUserNo(userNo);
 
 			// 출근날짜를 화면에 보냄
-			List<Commute> commutes = commuteService.Datecompare(dateData);
+			List<Commute> commutes = commuteService.dateCompare(dateData);
 			model.addAttribute("commutes", commutes);
-			return "main";
 
+			return "redirect:/main.do";
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
+			request.setAttribute("userNotFound", true);
+			request.setAttribute("ret", "/exam/loginForm.do");
 
 		} catch (PasswordNotMatch e) {
 			e.printStackTrace();
-			request.setAttribute("error", e);
-			return "Fail/pageFail";
+			request.setAttribute("loginFail", true);
+			request.setAttribute("ret", "/exam/loginForm.do");
 		}
+
+		return "main";
 	}
 }

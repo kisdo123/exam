@@ -9,17 +9,33 @@ public class User {
 	private String id; // 회원 id
 	private String pw; // 회원 pw
 	private String name; // 회원 이름
-	
+	private Boolean admin;
+
 	public User() {
-		
+
 	}
-	
+
 	public User(int userNo, String id, String pw) {
 		this.userNo = userNo;
 		this.id = id;
 		this.pw = pw;
 	}
-	
+
+	public User(int userNo, String id, String pw, String name, Boolean admin) {
+		this.userNo = userNo;
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.admin = admin;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
 
 	public String getName() {
 		return name;
@@ -32,21 +48,25 @@ public class User {
 	public int getUserNo() {
 		return userNo;
 	}
+
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getPw() {
 		return pw;
 	}
+
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-	
-	
+
 }

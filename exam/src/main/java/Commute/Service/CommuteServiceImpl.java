@@ -25,7 +25,7 @@ public class CommuteServiceImpl implements CommuteService {
 	private CommuteDAO commuteDAO;
 
 	// 회원번호로 출퇴근 insert
-	public void commuteInsert(int userNo) {
+	public Commute commuteInsert(int userNo) {
 		// 출근 확인
 		Commute commute = commuteDAO.checkattend(userNo);
 		// 목록이 존재하면 에러
@@ -35,12 +35,13 @@ public class CommuteServiceImpl implements CommuteService {
 
 		// 목록이 존재하지 않으면 insert
 		int res = commuteDAO.insertUserNo(userNo);
-
 		// 결과값이 0이거나 1보다 크면 에러
 		if (res == 0 || res > 1) {
 			throw new FailInsertCommute("insert실패");
 		}
 
+		Commute comm = commuteDAO.checkattend(userNo);
+		return comm;
 	}
 
 	// 출근확인후 퇴근 update
@@ -67,7 +68,7 @@ public class CommuteServiceImpl implements CommuteService {
 	}
 
 	// 출근일 가져오기
-	public List<Commute> Datecompare(DateData dateData) {
+	public List<Commute> dateCompare(DateData dateData) {
 		// Controller에서 받은 년도과 월의 출근 날 검색
 		List<Commute> commutes = commuteDAO.attendMonth(dateData);
 
