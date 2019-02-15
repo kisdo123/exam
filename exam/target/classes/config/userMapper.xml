@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User.DAO.UserMapper">
+
+	<!-- id의 유니크키를 설정하여 id를 이용하여 회원검색 -->
+	<select id="selectUserById" resultType="User" parameterType="string">
+		select * from user where id = #{id}
+	</select>
+	
+</mapper>

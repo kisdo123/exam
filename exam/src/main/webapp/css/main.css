@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+#formdiv{
+	display: flex;
+}
+
+#calendardiv {
+	text-align: center;
+}
+
+#calendar {
+	border: 3px solid #3333FF;
+	text-align: center;
+	width: 60%;
+	min-height: 700px;
+	display: inline-table;
+}
+
+tr td {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+#tbCalendarYM {
+	font-size: x-large;
+	font-weight: bolder;
+}
+
+#daytr td:nth-child(1) {
+	background-color: #FFA7A7;
+}
+
+#daytr td:nth-child(7) {
+	background-color: #B2CCFF;
+}
+
