@@ -40,12 +40,13 @@ public class CommuteServiceImpl implements CommuteService {
 			throw new FailInsertCommute("insert실패");
 		}
 
+		//출근 시간을 가져오기위한 select
 		Commute comm = commuteDAO.checkattend(userNo);
 		return comm;
 	}
 
 	// 출근확인후 퇴근 update
-	public void checkAndUpdate(int userNo) {
+	public Commute checkAndUpdate(int userNo) {
 		// 출근확인
 		Commute commute = commuteDAO.checkattend(userNo);
 
@@ -64,7 +65,10 @@ public class CommuteServiceImpl implements CommuteService {
 		if (res == 0 || res > 1) {
 			throw new FailUpdateCommute("퇴근처리 실패");
 		}
-
+		
+		//퇴근 시간을 가져오기위한 select
+		Commute comm = commuteDAO.checkattend(userNo);
+		return comm;
 	}
 
 	// 출근일 가져오기

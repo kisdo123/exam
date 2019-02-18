@@ -12,10 +12,10 @@ public interface CommuteDAO {
 	//퇴근시간 update
 	public int updateleaved(int commuteNo);
 	
-	//출근 확인
+	//해당일에 출근했는지 조회
 	public Commute checkattend (int userNo);
 	
-	//출근 확인
+	//년 월 기준 출근확인
 	public List<Commute> attendMonth(DateData dateData);
 		
 	//출근일 검색

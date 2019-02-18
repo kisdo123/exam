@@ -91,7 +91,7 @@ $(function() {
 		}
 	});
 
-	//중복확인
+	// 중복확인
 	$("#idDuplicate").click(function() {
 		if ($("#id").val() == '') {
 			alert("ID를 입력하세요");
@@ -121,23 +121,30 @@ $(function() {
 
 });
 
+// submit 전에 체크 할것
 function check() {
 
+	//아이디 입력유무
 	if ($("#id").val() == "") {
 		$("#id_msg").html("아이디를 입력하세요.").css("color", "red")
 		$("#id").css("border-color", "red");
 		flag = false;
 	}
+	
+	//비밀번호 입력유무
 	if ($("#pw").val() == "") {
 		$("#pw_msg").html("비밀번호를 입력하세요.").css("color", "red")
 		$("#pw").css("border-color", "red");
 		flag = false;
 	}
+	//비밀번호체크 입력유무
 	if ($("#pwCheck").val() == "") {
 		$("#pwCheck_msg").html("비밀번호를 입력하세요.").css("color", "red")
 		$("#pwCheck").css("border-color", "red");
 		flag = false;
 	}
+	
+	//비밀번호와 비밀번호 체크와 같은지 확인
 	if ($("#pwCheck").val() != "") {
 		if ($("#pw").val() != $("#pwCheck").val()) {
 			$("#pwCheck_msg").html("입력하신 비밀번호가 다릅니다.").css("color", "red")
@@ -148,11 +155,15 @@ function check() {
 			$("#pwCheck").css("border-color", "gray");
 		}
 	}
+	
+	//이름 입력유무
 	if ($("#name").val() == "") {
 		$("#name_msg").html("이름을 입력하세요.").css("color", "red")
 		$("#name").css("border-color", "red");
 		flag = false;
 	}
+	
+	//중복체크를 실행했는지 확인
 	if (flag) {
 		if (idDup == true) {
 			$("#FormBYinput")[0].submit();

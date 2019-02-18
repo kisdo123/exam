@@ -11,7 +11,7 @@ public interface CommuteService {
 	public Commute commuteInsert(int userNo);
 
 	// 퇴근시간 update
-	public void checkAndUpdate(int userNo);
+	public Commute checkAndUpdate(int userNo);
 
 	// 출근일 조회
 	public List<Commute> dateCompare(DateData dateData);

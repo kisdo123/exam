@@ -24,12 +24,12 @@ public class CommuteDAOImpl implements CommuteDAO {
 		return commuteMapper.updateleaved(commuteNo);
 	}
 
-	//출근 확인
+	//해당일에 출근했는지 조회
 	public Commute checkattend(int userNo) {
 		return commuteMapper.checkattend(userNo);
 	}
 
-	//출근 확인
+	//년 월 기준 출근 조회
 	public List<Commute> attendMonth(DateData dateData) {
 		return commuteMapper.attendMonth(dateData);
 	}

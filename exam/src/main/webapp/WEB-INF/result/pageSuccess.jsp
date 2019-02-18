@@ -15,7 +15,7 @@
 	</c:if>
 	<c:if test="${leave }">
 		<script>
-			alert("퇴근처리 되었습니다.");
+			alert("퇴근처리 되었습니다. \n${leaveTime}");
 			location.href = "/exam/moveCommute.do";
 		</script>
 	</c:if>

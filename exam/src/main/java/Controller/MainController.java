@@ -180,8 +180,10 @@ public class MainController {
 
 		try {
 			// 퇴근 update
-			commuteService.checkAndUpdate(userNo);
+			Commute commute = commuteService.checkAndUpdate(userNo);
+			String leaveTime= commute.getLeaved();
 			request.setAttribute("leave", true);
+			request.setAttribute("leaveTime", leaveTime);
 			return "result/pageSuccess";
 		} catch (FailAttendCheck e) {
 			e.printStackTrace();
@@ -210,13 +212,13 @@ public class MainController {
 		String toMonth;
 		try {
 
+			//파라미터가 존재 확인
 			if (checkDate != null) {
-				System.out.println(checkDate);
-				
+				//존재하면 가공
 				toYear = checkDate.substring(0, 4);
 				toMonth = checkDate.substring(5, 7);
 			}else {
-				// 현재 년,월을 가져옴
+				// 파라미터가 존재하지않으면 셋팅 
 				Calendar cal = Calendar.getInstance();
 				int year = cal.get(cal.YEAR);
 				int month = cal.get(cal.MONTH) + 1;
