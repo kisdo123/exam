@@ -8,4 +8,7 @@ public interface UserService {
 	
 	//회원가입
 	public void join(User user);
+
+	//중복확인
+	public Boolean idDuplicate(String id);
 }

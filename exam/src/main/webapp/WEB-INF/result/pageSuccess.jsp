@@ -10,7 +10,7 @@
 	<c:if test="${attend }">
 		<script>
 			alert("출근처리 되었습니다. \n${attendTime}");
-			location.href = "/exam/main.do";
+			location.href = "redirect:/exam/main.do";
 		</script>
 	</c:if>
 	<c:if test="${leave }">

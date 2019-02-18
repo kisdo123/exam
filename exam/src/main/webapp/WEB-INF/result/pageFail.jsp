@@ -28,7 +28,7 @@
 		</script>
 	</c:if>
 
-	<c:if test="${loginFail }">
+	<c:if test="${PasswordNotMatch }">
 		<script>
 			alert("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해 주세요");
 			location.href = '${ret }';

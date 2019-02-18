@@ -14,13 +14,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDAO userDAO;
-	
-	
-	//로그인
+
+	// 로그인
 	public User login(String id, String pw) {
-		//회원 조회
+		// 회원 조회
 		User user = userDAO.selectUserById(id);
-		
+
 		// user가 존재하지않으면 에러
 		if (user.equals("") || user.equals(null)) {
 			throw new UserNotFoundException("유저가 존재하지 않습니다.");
@@ -33,16 +32,26 @@ public class UserServiceImpl implements UserService {
 
 		return user;
 	}
-	
-	//회원가입
+
+	// 회원가입
 	public void join(User user) {
-		//회원가입
+		// 회원가입
 		int res = userDAO.joinUser(user);
-		
-		if(res == 0 || res>1) {
+
+		if (res == 0 || res > 1) {
 			throw new FailJoinUser("회원가입 실패");
 		}
-		
+
+	}
+
+	//중복확인
+	public Boolean idDuplicate(String id) {
+		User user = userDAO.selectUserById(id);
+		if (user == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }

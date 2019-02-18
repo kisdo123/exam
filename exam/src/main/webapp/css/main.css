@@ -4,7 +4,11 @@ html, body {
 	margin: 0px;
 	padding: 0px;
 }
-#formdiv{
+
+#calendardiv {
+}
+
+#formdiv {
 	display: flex;
 }
 
@@ -37,4 +41,3 @@ tr td {
 #daytr td:nth-child(7) {
 	background-color: #B2CCFF;
 }
-

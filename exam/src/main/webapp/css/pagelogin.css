@@ -4,52 +4,37 @@ html, body {
 	padding: 0;
 }
 
-body {
-	display: flex;
-	align-items: center;
-	background-color: #f5f5f5;
+.margin-left {
+	margin-left: 50px;
 }
 
-.form-signin {
-	width: 16%;
-	padding: 15px;
-	margin: auto;
+.joininput {
+	font-size: 15pt;
+	height: 40px;
 }
-
-.form-signin .form-control {
-	position: relative;
-	box-sizing: border-box;
-	height: auto;
-	padding: 10px;
-	font-size: 16px;
-}
-
-.form-signin .form-control:focus {
-	z-index: 2;
-}
-
-.form-signin input[type="text"] {
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-	margin-bottom: 10px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-}
-
-.input {
-	padding: 15px;
-	border: 2px solid;
-	margin-top: 20px;;
+.divheight{
+	min-height: 80px;
+    max-height: 80px;
 }
 
 #title {
-	font-size: 35px;
-	font-weight: bolder;
-	margin: 40px;
+	font-size: 30pt;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#FormBYinput {
+	text-align: left;
+}
+
+#login {
+	position: absolute;
+	height: 180px;
+	top: 50%;
+	margin-top: -90px;
+	width: 250px;
+	left: 50%;
+	margin-left: -125px;
 }
 
 #popup {
@@ -58,11 +43,13 @@ body {
 	margin-left: -200px;
 	background-color: white;
 	width: 400px;
-	height: 500px;
+	height: 478px;
 	border-radius: 4px;
 	border: 2.5px solid #312b2bc9;
 	text-align: center;
 	display: none;
+	top: 50%;
+	margin-top: -239px;
 }
 
 #popupbackground {
@@ -74,23 +61,13 @@ body {
 	display: none;
 }
 
-#movejoinbtn {
-	width: 64px;
-	top: 59%;
-	position: absolute;
-	left: 50%;
-	margin-left: -32px;
-	font-size: small;
-	color: black;
+#idDuplicate{
 	background-color: white;
-	border: 0px solid;
-	margin-top: -15px;
+	border: 1px solid black;
 }
 
 #btnjoin {
-	position: relative;
 	top: 117px;
-	top: 91px;
 	height: 70px;
 	font-size: 20px;
 	font-weight: bold;

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.security.auth.login.FailedLoginException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,6 +67,40 @@ public class MainController {
 		return "pagejoin";
 	}
 
+	// 중복검사
+	@RequestMapping("/idDuplication.do")
+	@ResponseBody
+	public String idDuplication(@RequestParam("id") String id) {
+		//결과를 boolean으로 받는다.
+		Boolean res = userService.idDuplicate(id);
+		String result = "";
+		if (res) {
+			result = "true";
+		} else {
+			result = "false";
+		}
+		return result;
+	}
+
+	// 로그아웃
+	@RequestMapping("/logout.do")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		//세션에 로그인 정보 삭제
+		request.getSession().setAttribute("loginUser", null);
+		
+		//모든 쿠키 제거
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				cookies[i].setMaxAge(0);
+				response.addCookie(cookies[i]);
+			}
+		}
+		
+		return "redirect:/loginForm.do";
+	}
+
 	// 회원가입
 	@RequestMapping("/join.do")
 	public String join(Model model, HttpServletRequest request, @RequestParam("id") String id,
@@ -88,7 +123,6 @@ public class MainController {
 		} catch (DuplicateKeyException e) {
 			e.printStackTrace();
 			request.setAttribute("userExist", true);
-			request.setAttribute("ret", "/exam/loginForm.do");
 		}
 		return "result/pageFail";
 	}
@@ -119,7 +153,7 @@ public class MainController {
 			request.setAttribute("attend", true);
 			request.setAttribute("attendTime", attendTime);
 			return "result/pageSuccess";
-			
+
 		} catch (FailInsertCommute e) {
 			e.printStackTrace();
 			request.setAttribute("FailInsertCommute", true);
@@ -234,18 +268,18 @@ public class MainController {
 			List<Commute> commutes = commuteService.dateCompare(dateData);
 			model.addAttribute("commutes", commutes);
 
-			return "redirect:/main.do";
+			return "main";
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 			request.setAttribute("userNotFound", true);
-			request.setAttribute("ret", "/exam/loginForm.do");
+			request.setAttribute("ret", "loginForm.do");
 
 		} catch (PasswordNotMatch e) {
 			e.printStackTrace();
-			request.setAttribute("loginFail", true);
-			request.setAttribute("ret", "/exam/loginForm.do");
+			request.setAttribute("PasswordNotMatch", true);
+			request.setAttribute("ret", "loginForm.do");
 		}
 
-		return "main";
+		return "result/pageFail";
 	}
 }

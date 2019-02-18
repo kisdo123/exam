@@ -25,8 +25,14 @@
 			<form action="leaveForm.do">
 				<input type="submit" value="퇴근">
 			</form>
+
+			<form action="logout.do">
+				<input type="submit" value="로그아웃">
+			</form>
 		</div>
 	</div>
+	
+	<button id="attendView" onclick="calendarView.do"> 출근표 보기 </button>
 
 	<c:forEach var="commutes" items="${commutes}">
 		<c:if test="${!empty commutes}">
@@ -39,7 +45,6 @@
 			<input type="hidden" class="event" value="${comm.getAttend()}">
 		</c:if>
 	</c:forEach>
-
 
 	<div id="calendardiv">
 		<table id="calendar">
