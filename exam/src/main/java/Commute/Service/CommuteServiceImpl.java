@@ -50,7 +50,7 @@ public class CommuteServiceImpl implements CommuteService {
 		Commute commute = commuteDAO.checkattend(userNo);
 
 		// 목록이 존재하지 않으면 에러
-		if (commute.equals(null) || commute.equals("")) {
+		if (commute == null) {
 			throw new FailAttendCheck("출근처리가 되지않았습니다.");
 		}
 

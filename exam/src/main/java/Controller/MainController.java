@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -71,7 +72,7 @@ public class MainController {
 	@RequestMapping("/idDuplication.do")
 	@ResponseBody
 	public String idDuplication(@RequestParam("id") String id) {
-		//결과를 boolean으로 받는다.
+		// 결과를 boolean으로 받는다
 		Boolean res = userService.idDuplicate(id);
 		String result = "";
 		if (res) {
@@ -85,10 +86,10 @@ public class MainController {
 	// 로그아웃
 	@RequestMapping("/logout.do")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
-		//세션에 로그인 정보 삭제
+		// 세션에 로그인 정보 삭제
 		request.getSession().setAttribute("loginUser", null);
-		
-		//모든 쿠키 제거
+
+		// 모든 쿠키 제거
 		Cookie[] cookies = request.getCookies();
 
 		if (cookies != null) {
@@ -97,7 +98,7 @@ public class MainController {
 				response.addCookie(cookies[i]);
 			}
 		}
-		
+
 		return "redirect:/loginForm.do";
 	}
 
@@ -196,7 +197,7 @@ public class MainController {
 	}
 
 	// 달 이동
-	@RequestMapping(value = "/moveCommute.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/moveCommute.do")
 	public String moveCommute(Model model, HttpServletRequest request) {
 
 		// 세션에 저장된 로그인 정보를 가져옴
@@ -204,12 +205,26 @@ public class MainController {
 
 		// 회원정보 저장
 		int userNo = loginUser.getUserNo();
-
+		String checkDate = request.getParameter("checkDate");;
+		String toYear;
+		String toMonth;
 		try {
-			String checkDate = request.getParameter("checkDate");
 
-			String toYear = checkDate.substring(0, 4);
-			String toMonth = checkDate.substring(5, 7);
+			if (checkDate != null) {
+				System.out.println(checkDate);
+				
+				toYear = checkDate.substring(0, 4);
+				toMonth = checkDate.substring(5, 7);
+			}else {
+				// 현재 년,월을 가져옴
+				Calendar cal = Calendar.getInstance();
+				int year = cal.get(cal.YEAR);
+				int month = cal.get(cal.MONTH) + 1;
+
+				// 형변환
+				toYear = Integer.toString(year);
+				toMonth = Integer.toString(month);	
+			}
 
 			// DateData에 셋팅
 			DateData dateData = new DateData();
@@ -218,14 +233,10 @@ public class MainController {
 			dateData.setUserNo(userNo);
 
 			// 출근일을 가져온후 main에 보낸다.
-			List<Commute> comm = commuteService.dateCompare(dateData);
-			model.addAttribute("comm", comm);
+			List<Commute> commutes = commuteService.dateCompare(dateData);
+			model.addAttribute("commutes", commutes);
 			return "main";
 
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			request.setAttribute("CookieNotFoundException", true);
-			request.setAttribute("ret", "/exam/main.do");
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("CalendarException", true);
@@ -241,34 +252,10 @@ public class MainController {
 		try {
 			// 아이디와 비밀번호확인후 로그인
 			User user = userService.login(id, pw);
-
 			// 로그인후 세션에 저장
 			request.getSession().setAttribute("loginUser", user);
-
-			// 세션에 저장한 User정보중 회원번호를 가져옴
-			User loginUser = (User) request.getSession().getAttribute("loginUser");
-			int userNo = loginUser.getUserNo();
-
-			// 현재 년,월을 가져옴
-			Calendar cal = Calendar.getInstance();
-			int year = cal.get(cal.YEAR);
-			int month = cal.get(cal.MONTH) + 1;
-
-			// 형변환
-			String toYear = Integer.toString(year);
-			String toMonth = Integer.toString(month);
-
-			// DateData에 셋팅
-			DateData dateData = new DateData();
-			dateData.setToYear(toYear);
-			dateData.setToMonth(toMonth);
-			dateData.setUserNo(userNo);
-
-			// 출근날짜를 화면에 보냄
-			List<Commute> commutes = commuteService.dateCompare(dateData);
-			model.addAttribute("commutes", commutes);
-
-			return "main";
+			request.setAttribute("login", true);
+			return "result/pageSuccess";
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 			request.setAttribute("userNotFound", true);

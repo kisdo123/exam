@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 		User user = userDAO.selectUserById(id);
 
 		// user가 존재하지않으면 에러
-		if (user.equals("") || user.equals(null)) {
+		if (user == null) {
 			throw new UserNotFoundException("유저가 존재하지 않습니다.");
 		}
 

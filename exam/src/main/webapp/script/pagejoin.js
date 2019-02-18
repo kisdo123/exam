@@ -1,4 +1,6 @@
 var idDup = false;
+var flag = true;
+
 $(function() {
 	// 회원가입 나타나기
 	$("#movejoinbtn").click(function() {
@@ -89,6 +91,7 @@ $(function() {
 		}
 	});
 
+	//중복확인
 	$("#idDuplicate").click(function() {
 		if ($("#id").val() == '') {
 			alert("ID를 입력하세요");
@@ -119,7 +122,6 @@ $(function() {
 });
 
 function check() {
-	var flag = true;
 
 	if ($("#id").val() == "") {
 		$("#id_msg").html("아이디를 입력하세요.").css("color", "red")
@@ -152,8 +154,8 @@ function check() {
 		flag = false;
 	}
 	if (flag) {
-		if (idDup) {
-			$("#form").submit();
+		if (idDup == true) {
+			$("#FormBYinput")[0].submit();
 		} else {
 			alert("아이디 중복체크를 해주세요");
 		}

@@ -32,17 +32,9 @@
 		</div>
 	</div>
 	
-	<button id="attendView" onclick="calendarView.do"> 출근표 보기 </button>
-
 	<c:forEach var="commutes" items="${commutes}">
 		<c:if test="${!empty commutes}">
 			<input type="hidden" class="event" value="${commutes.getAttend()}">
-		</c:if>
-	</c:forEach>
-
-	<c:forEach var="comm" items="${comm}">
-		<c:if test="${!empty comm}">
-			<input type="hidden" class="event" value="${comm.getAttend()}">
 		</c:if>
 	</c:forEach>
 
@@ -64,7 +56,6 @@
 			</tr>
 		</table>
 	</div>
-
 	<script type="text/javascript">
 		buildCalendar();
 	</script>

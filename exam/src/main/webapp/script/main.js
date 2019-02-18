@@ -10,25 +10,21 @@ var reYear = reCal.getFullYear(); // 오늘 년도
 var reday = reCal.getDate(); // 오늘 일
 
 $(document).ready(function() {
+	// 이전달로 이동
 	$("#prevCalendar").on("click", function() {
 		prevCalendar();
 	});
+	// 다음달로 이동
 	$("#nextCalendar").on("click", function() {
 		nextCalendar();
 	});
 
 });
 
-//쿠키에 저장된값 가져오기
-var getCookie = function(name) {
-	var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-	return value ? value[2] : null;
-};
-
 // 현재 달 달력 만들기
 function buildCalendar() {
 	var cookie = getCookie("checkDate");
-	//쿠키가 존재하지않으면 데이터 초기화
+	// 쿠키가 존재하지않으면 데이터 초기화
 	if (!cookie) {
 		cal = new Date();
 		year = cal.getFullYear(); // 년
@@ -120,6 +116,13 @@ function buildCalendar() {
 		}
 	}
 }
+
+// 쿠키에 저장된값 가져오기
+var getCookie = function(name) {
+	var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	return value ? value[2] : null;
+};
+
 // 이전 달
 function prevCalendar() {
 	month--;
@@ -134,7 +137,7 @@ function prevCalendar() {
 	}
 	checkDate = year + "-" + month;
 
-	//쿠키에 저장
+	// 쿠키에 저장
 	document.cookie = "checkDate" + "=" + checkDate;
 	location.href = "moveCommute.do?checkDate=" + checkDate;
 }
@@ -154,7 +157,7 @@ function nextCalendar() {
 	}
 	checkDate = year + "-" + month;
 
-	//쿠키에 저장
+	// 쿠키에 저장
 	document.cookie = "checkDate" + "=" + checkDate;
 	location.href = "moveCommute.do?checkDate=" + checkDate;
 }

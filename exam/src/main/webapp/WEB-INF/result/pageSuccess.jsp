@@ -10,19 +10,24 @@
 	<c:if test="${attend }">
 		<script>
 			alert("출근처리 되었습니다. \n${attendTime}");
-			location.href = "/exam/main.do";
+			location.href = "/exam/moveCommute.do";
 		</script>
 	</c:if>
 	<c:if test="${leave }">
 		<script>
 			alert("퇴근처리 되었습니다.");
-			location.href = "/exam/main.do";
+			location.href = "/exam/moveCommute.do";
 		</script>
 	</c:if>
 	<c:if test="${join }">
 		<script>
 			alert("회원가입 되었습니다.");
 			location.href = "/exam/loginForm.do";
+		</script>
+	</c:if>
+	<c:if test="${login }">
+		<script>
+			location.href = "/exam/moveCommute.do";
 		</script>
 	</c:if>
 </body>

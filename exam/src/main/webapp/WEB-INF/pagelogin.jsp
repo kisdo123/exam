@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="/exam/css/pagelogin.css">
 <link rel="stylesheet" href="/exam/css/bootstrap.min.css">
 <script type="text/javascript" src="/exam/script/pagejoin.js"></script>
-<script type="text/javascript" src="/exam/script/duplicate.js"></script>
 </head>
 <body class="text-center" oncontextmenu="return false" ondragstart="return false" onselect="return false">
 	<div id="login">

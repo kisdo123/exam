@@ -69,13 +69,6 @@
 			location.href = '${ret }';
 		</script>
 	</c:if>
-
-	<c:if test="${CookieNotFoundException }">
-		<script>
-			alert("쿠키가 존재하지 않습니다.");
-			location.href = '${ret }';
-		</script>
-	</c:if>
 	
 	<c:if test="${CalendarException }">
 		<script>
