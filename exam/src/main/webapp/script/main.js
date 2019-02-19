@@ -118,13 +118,14 @@ function buildCalendar() {
 		
 		// 일 기준으로 검색후 맞으면 출근을 추가한다.
 		for (var j = 0; j < event.length; j++) {
-			if (event[j].value.substring(8, 10) == i) {
-				var time = event[j].value.substring(11, 13);
-				var totime = event[j].value.substring(11, 19);
+			var day = event[j].value.substring(8, 10);
+			var time = event[j].value.substring(11, 13);
+			var totime = event[j].value.substring(11, 19);
+			if (day == i) {
 				if(time > 9 ){
-					cell.innerHTML += "<div>지각</div> <br>" + totime;
+					cell.innerHTML += "<div>지각</div> <br><font color='red'>" + totime + "</font>";
 				}else{
-					cell.innerHTML += "<div>출근</div> <br>" + totime;
+					cell.innerHTML += "<div>출근</div> <br><font color='blue'>" + totime + "</font>";
 				}
 			}
 		}
