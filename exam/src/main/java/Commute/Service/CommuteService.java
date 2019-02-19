@@ -15,5 +15,7 @@ public interface CommuteService {
 
 	// 출근일 조회
 	public List<Commute> dateCompare(DateData dateData);
-
+	
+	// 출근 시간 조회
+	public Commute TimeCheck(int userNo);
 }

@@ -26,7 +26,7 @@ public class LoginCheck implements Filter {
 
 		// loginForm.do로 접속시 세션에 유저 객체가 존재 하면 메인화면으로 보낸다.
 		if (session.getAttribute("loginUser") != null) {
-			response.sendRedirect(request.getContextPath() + "/loging.do");
+			response.sendRedirect(request.getContextPath() + "/logging.do");
 		} else {
 			chainObj.doFilter(req, resp);
 		}

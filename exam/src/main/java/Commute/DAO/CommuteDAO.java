@@ -12,7 +12,7 @@ public interface CommuteDAO {
 	//퇴근시간 update
 	public int updateleaved(int commuteNo);
 	
-	//해당일에 출근했는지 조회
+	//오늘 출근했는지 조회
 	public Commute checkattend (int userNo);
 	
 	//년 월 기준 출근확인

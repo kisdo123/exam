@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,8 @@ public class CommuteServiceImpl implements CommuteService {
 			throw new FailInsertCommute("insert실패");
 		}
 
-		//출근 시간을 가져오기위한 select
-		Commute comm = commuteDAO.checkattend(userNo);
+		// 출근 시간을 가져오기위한 select
+		Commute comm = TimeCheck(userNo);
 		return comm;
 	}
 
@@ -65,9 +66,9 @@ public class CommuteServiceImpl implements CommuteService {
 		if (res == 0 || res > 1) {
 			throw new FailUpdateCommute("퇴근처리 실패");
 		}
-		
-		//퇴근 시간을 가져오기위한 select
-		Commute comm = commuteDAO.checkattend(userNo);
+
+		// 퇴근 시간을 가져오기위한 select
+		Commute comm = TimeCheck(userNo);
 		return comm;
 	}
 
@@ -85,9 +86,20 @@ public class CommuteServiceImpl implements CommuteService {
 
 			// 해당하는 날짜에 출근했는지 검색 후 데이터 삽입
 			commuteDAO.attendDay(dateData);
-			comm.setAttend(toDay);
 		}
 		return commutes;
+	}
+
+	//시간 체크
+	public Commute TimeCheck(int userNo) {
+		//해당날짜에 조회
+		Commute commute = commuteDAO.checkattend(userNo);
+		// 목록이 존재하지 않으면 에러
+		if (commute == null) {
+			throw new NotFoundCommtues("목록을 찾을수 없습니다.");
+		}
+		
+		return commute;
 	}
 
 }

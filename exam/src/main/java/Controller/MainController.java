@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.javassist.runtime.DotClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,7 @@ import Exception.FailAttendCheck;
 import Exception.FailInsertCommute;
 import Exception.FailJoinUser;
 import Exception.FailUpdateCommute;
+import Exception.NotFoundCommtues;
 import Exception.PasswordNotMatch;
 import Exception.UserNotFoundException;
 import User.DTO.User;
@@ -55,10 +58,11 @@ public class MainController {
 		request.setAttribute("loginFilter", true);
 		return "result/pageFail";
 	}
-	
-	@RequestMapping("/loging.do")
+
+	// loginCheckFilter 결과페이지로 리턴
+	@RequestMapping("/logging.do")
 	public String loging(HttpServletRequest request) {
-		request.setAttribute("loging", true);
+		request.setAttribute("logging", true);
 		return "result/pageFail";
 	}
 
@@ -169,6 +173,10 @@ public class MainController {
 			e.printStackTrace();
 			request.setAttribute("AlreadyAttend", true);
 			request.setAttribute("ret", "/exam/main.do");
+		} catch (NotFoundCommtues e) {
+			e.printStackTrace();
+			request.setAttribute("NotFoundCommtues", true);
+			request.setAttribute("ret", "/exam/main.do");
 		}
 		return "result/pageFail";
 
@@ -187,10 +195,11 @@ public class MainController {
 		try {
 			// 퇴근 update
 			Commute commute = commuteService.checkAndUpdate(userNo);
-			String leaveTime= commute.getLeaved();
+			String leaveTime = commute.getLeaved();
 			request.setAttribute("leave", true);
 			request.setAttribute("leaveTime", leaveTime);
 			return "result/pageSuccess";
+
 		} catch (FailAttendCheck e) {
 			e.printStackTrace();
 			request.setAttribute("FailAttendCheck", true);
@@ -199,6 +208,10 @@ public class MainController {
 		} catch (FailUpdateCommute e) {
 			e.printStackTrace();
 			request.setAttribute("FailUpdateCommute", true);
+			request.setAttribute("ret", "/exam/main.do");
+		} catch (NotFoundCommtues e) {
+			e.printStackTrace();
+			request.setAttribute("NotFoundCommtues", true);
 			request.setAttribute("ret", "/exam/main.do");
 		}
 		return "result/pageFail";
@@ -213,25 +226,30 @@ public class MainController {
 
 		// 회원정보 저장
 		int userNo = loginUser.getUserNo();
-		String checkDate = request.getParameter("checkDate");;
+		String checkDate = request.getParameter("checkDate");
+		;
 		String toYear;
 		String toMonth;
+		String toDay = null;
+		String toTime = null;
+		// String toTime = null;
 		try {
 
-			//파라미터가 존재 확인
+			// 파라미터가 존재 확인
 			if (checkDate != null) {
-				//존재하면 가공
+				// 존재하면 가공
 				toYear = checkDate.substring(0, 4);
 				toMonth = checkDate.substring(5, 7);
-			}else {
-				// 파라미터가 존재하지않으면 셋팅 
+			} else {
+				// 파라미터가 존재하지않으면 셋팅
 				Calendar cal = Calendar.getInstance();
 				int year = cal.get(cal.YEAR);
 				int month = cal.get(cal.MONTH) + 1;
 
 				// 형변환
 				toYear = Integer.toString(year);
-				toMonth = Integer.toString(month);	
+				toMonth = Integer.toString(month);
+
 			}
 
 			// DateData에 셋팅
@@ -239,6 +257,7 @@ public class MainController {
 			dateData.setToYear(toYear);
 			dateData.setToMonth(toMonth);
 			dateData.setUserNo(userNo);
+			// dateData.setToTime(toTime);
 
 			// 출근일을 가져온후 main에 보낸다.
 			List<Commute> commutes = commuteService.dateCompare(dateData);

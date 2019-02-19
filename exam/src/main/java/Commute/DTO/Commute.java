@@ -12,24 +12,20 @@ public class Commute {
 	private String attend; //출근 시간
 	private String leaved; //퇴근 시간
 	private Boolean vacation; //휴가
-	private Boolean able; // 출근 확인 출근(1) 결근(0)
 
 	public Commute() {
 	}
 
-	public Commute(int userNo, Boolean able) {
+	public Commute(int userNo) {
 		this.userNo = userNo;
-		this.able = able;
 	}
 
-	public Commute(int commuteNo, int userNo, String attend, String leaved, Boolean vacation,
-			Boolean able) {
+	public Commute(int commuteNo, int userNo, String attend, String leaved, Boolean vacation) {
 		this.commuteNo = commuteNo;
 		this.userNo = userNo;
 		this.attend = attend;
 		this.leaved = leaved;
 		this.vacation = vacation;
-		this.able = able;
 	}
 
 	public int getCommuteNo() {
@@ -70,14 +66,6 @@ public class Commute {
 
 	public void setVacation(Boolean vacation) {
 		this.vacation = vacation;
-	}
-
-	public Boolean getAble() {
-		return able;
-	}
-
-	public void setAble(Boolean able) {
-		this.able = able;
 	}
 
 }

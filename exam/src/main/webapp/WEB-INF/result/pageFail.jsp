@@ -14,7 +14,7 @@
 		</script>
 	</c:if>
 
-	<c:if test="${loging }">
+	<c:if test="${logging }">
 		<script>
 			alert("로그인중 입니다");
 			location.href = "/exam/moveCommute.do";
@@ -35,6 +35,12 @@
 		</script>
 	</c:if>
 
+	<c:if test="${NotFoundCommtues }">
+		<script>
+			alert("출근 목록을 찾을 수 없습니다");
+			location.href = '${ret }';
+		</script>
+	</c:if>
 	<c:if test="${PasswordNotMatch }">
 		<script>
 			alert("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해 주세요");

@@ -14,7 +14,7 @@ public interface CommuteMapper {
 	//퇴근시간을 현재시간으로 update int로 결과값을 받음 0실패 1성공 1이상 에러
 	int updateleaved(int commuteNo);
 	
-	//당일에 출근 했는지 확인한다 출근했으면 에러
+	//오늘 출근 했는지 확인한다
 	Commute checkattend (int userNo);
 	
 	//년 월을 기준으로 검색후 list로 결과값을 받는다.

@@ -4,28 +4,29 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Commute.DAO.CommuteMapper">
-	<!-- 회원번호로 insert시 출근시간과 퇴근시간이 insert된다.  -->
+	<!-- 회원번호로 insert시 출근시간과 퇴근시간이 insert된다. -->
 	<insert id="insertUserNo" parameterType="int">
-		INSERT INTO commute (userNo, able) VALUES (#{id}, 1);
+		INSERT INTO commute (userNo) VALUES (#{id}, 1);
 	</insert>
-	
-	<!-- 당일 날짜와 회원번호 able을 기준을 출근 확인한다. -->
+
+	<!-- 당일 날짜와 회원번호를 기준을 출근 확인한다. -->
 	<select id="checkattend" parameterType="int" resultType="Commute">
-		SELECT * FROM commute WHERE date(attend) = date(now()) and userNo = #{userNo} and able = 1;
+		SELECT * FROM commute WHERE date(attend) = date(now()) and userNo = #{userNo} and vacation = 0;
 	</select>
-	
+
 	<!-- 퇴근시간을 현재시간으로 update -->
 	<update id="updateleaved" parameterType="Commute">
 		update commute set leaved=now() where commuteNo = #{commuteNo};
 	</update>
-	
+
 	<!-- 년월을 기준으로 검색 -->
 	<select id="attendMonth" parameterType="DateData" resultType="Commute">
-		SELECT * FROM commute WHERE year(attend) = #{toYear} and month(attend) = #{toMonth} and userNo = #{userNo} and able = 1;
+		SELECT * FROM commute WHERE year(attend) = #{toYear} and month(attend) = #{toMonth} and userNo = #{userNo} and vacation = 0;
 	</select>
-	
+
 	<!-- 출근일을 검색 -->
 	<select id="attendDay" parameterType="DateData" resultType="Commute">
-		SELECT * FROM commute WHERE date(attend) = #{toDay} and userNo = #{userNo} and able = 1;
+		SELECT * FROM commute WHERE date(attend) = #{toDay} and userNo = #{userNo} and vacation = 0;
 	</select>
+
 </mapper>

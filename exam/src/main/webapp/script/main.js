@@ -3,11 +3,19 @@ var year = null;
 var month = null;
 var today = null;
 var checkDate = null;
+var totime = null;
+
 // 오늘날짜 비교를 위한 캘린더
 var reCal = new Date();
 var reMonth = reCal.getMonth() + 1; // 오늘 월
 var reYear = reCal.getFullYear(); // 오늘 년도
 var reday = reCal.getDate(); // 오늘 일
+
+var hour = reCal.getHours();// 오늘 시
+var minute = reCal.getMinutes();// 오늘 분
+var second = reCal.getSeconds();// 오늘 초
+
+var retime = hour+minute+second; //시간
 
 $(document).ready(function() {
 	// 이전달로 이동
@@ -29,7 +37,7 @@ function buildCalendar() {
 		cal = new Date();
 		year = cal.getFullYear(); // 년
 		month = "0" + (cal.getMonth() + 1); // 월
-		today = cal.getDate();
+		today = cal.getDate(); //일
 	} else {
 		cal = new Date();
 		year = cookie.substring(0, 4);
@@ -107,11 +115,17 @@ function buildCalendar() {
 
 		// 히든처리한 input의 class이름을 검색
 		var event = document.getElementsByClassName('event');
-
+		
 		// 일 기준으로 검색후 맞으면 출근을 추가한다.
 		for (var j = 0; j < event.length; j++) {
-			if (event[j].value == i) {
-				cell.innerHTML += "<div>출근</div>";
+			if (event[j].value.substring(8, 10) == i) {
+				var time = event[j].value.substring(11, 13);
+				var totime = event[j].value.substring(11, 19);
+				if(time > 9 ){
+					cell.innerHTML += "<div>지각</div> <br>" + totime;
+				}else{
+					cell.innerHTML += "<div>출근</div> <br>" + totime;
+				}
 			}
 		}
 	}

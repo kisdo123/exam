@@ -24,7 +24,7 @@ public class CommuteDAOImpl implements CommuteDAO {
 		return commuteMapper.updateleaved(commuteNo);
 	}
 
-	//해당일에 출근했는지 조회
+	//오늘 출근했는지 조회
 	public Commute checkattend(int userNo) {
 		return commuteMapper.checkattend(userNo);
 	}
