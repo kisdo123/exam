@@ -11,14 +11,16 @@
 </head>
 <body>
 	<div>
-		이름 :
-		<input type="text" value="${loginUser.name }" readonly>
-		<br>
-		아이디 :
-		<input type="text" value="${loginUser.id }" name="id" readonly>
+		<div>
+			이름 :
+			<input type="text" value="${loginUser.name }" readonly>
+		</div>
+		<div>
+			아이디 :
+			<input type="text" value="${loginUser.id }" name="id" readonly>
+		</div>
 		<div id="formdiv">
 			<form action="attendForm.do">
-				<input type="hidden" value=${loginUser.userNo }>
 				<input type="submit" value="출근">
 			</form>
 
@@ -31,7 +33,7 @@
 			</form>
 		</div>
 	</div>
-	
+
 	<c:forEach var="commutes" items="${commutes}">
 		<c:if test="${!empty commutes}">
 			<input type="hidden" class="event" value="${commutes.getAttend()}">

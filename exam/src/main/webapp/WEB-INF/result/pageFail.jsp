@@ -14,6 +14,13 @@
 		</script>
 	</c:if>
 
+	<c:if test="${loging }">
+		<script>
+			alert("로그인중 입니다");
+			location.href = "/exam/moveCommute.do";
+		</script>
+	</c:if>
+
 	<c:if test="${userExist }">
 		<script>
 			alert("이미 존재하는 유저입니다");
@@ -69,7 +76,7 @@
 			location.href = '${ret }';
 		</script>
 	</c:if>
-	
+
 	<c:if test="${CalendarException }">
 		<script>
 			alert("캘린더 조회 실패");

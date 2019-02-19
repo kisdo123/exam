@@ -55,6 +55,12 @@ public class MainController {
 		request.setAttribute("loginFilter", true);
 		return "result/pageFail";
 	}
+	
+	@RequestMapping("/loging.do")
+	public String loging(HttpServletRequest request) {
+		request.setAttribute("loging", true);
+		return "result/pageFail";
+	}
 
 	// 로그인폼 요청
 	@RequestMapping("/loginForm.do")
@@ -199,7 +205,7 @@ public class MainController {
 	}
 
 	// 달 이동
-	@RequestMapping(value = "/moveCommute.do")
+	@RequestMapping("/moveCommute.do")
 	public String moveCommute(Model model, HttpServletRequest request) {
 
 		// 세션에 저장된 로그인 정보를 가져옴
