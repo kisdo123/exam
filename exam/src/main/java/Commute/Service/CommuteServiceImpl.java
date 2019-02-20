@@ -18,6 +18,7 @@ import Exception.FailAttendCheck;
 import Exception.FailInsertCommute;
 import Exception.FailUpdateCommute;
 import Exception.NotFoundCommtues;
+import User.DTO.User;
 
 @Service("commuteService")
 public class CommuteServiceImpl implements CommuteService {
@@ -26,7 +27,8 @@ public class CommuteServiceImpl implements CommuteService {
 	private CommuteDAO commuteDAO;
 
 	// 회원번호로 출퇴근 insert
-	public Commute commuteInsert(int userNo) {
+	public Commute commuteInsert(User user) {
+		int userNo = user.getUserNo();
 		// 출근 확인
 		Commute commute = commuteDAO.checkattend(userNo);
 		// 목록이 존재하면 에러
@@ -35,7 +37,7 @@ public class CommuteServiceImpl implements CommuteService {
 		}
 
 		// 목록이 존재하지 않으면 insert
-		int res = commuteDAO.insertUserNo(userNo);
+		int res = commuteDAO.insertUserNo(user);
 		// 결과값이 0이거나 1보다 크면 에러
 		if (res == 0 || res > 1) {
 			throw new FailInsertCommute("insert실패");

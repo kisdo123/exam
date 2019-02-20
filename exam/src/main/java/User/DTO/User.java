@@ -9,7 +9,7 @@ public class User {
 	private String id; // 회원 id
 	private String pw; // 회원 pw
 	private String name; // 회원 이름
-	private Boolean admin;
+	private Boolean admin; //관리자 여부
 
 	public User() {
 

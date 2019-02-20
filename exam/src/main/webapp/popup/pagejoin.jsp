@@ -4,7 +4,7 @@
 	<h1 id="title">회원가입</h1>
 	<form id="FormBYinput" action="join.do" method="post" name="form" onsubmit="return false">
 		<div class="divheight">
-			<input type="text" class=".col-xs-6 .col-sm-4 margin-left joininput" name="id" placeholder="ID" id="id" minlength="4" autofocus>
+			<input type="text" class=".col-xs-6 .col-sm-4 margin-left joininput" name="id" placeholder="ID" id="id" minlength="4">
 			<button class=".col-md-4" id="idDuplicate">중복확인</button>
 			<input type="hidden" name="idDuplication" value="idUncheck">
 			<p id="id_msg" class="margin-left"></p>

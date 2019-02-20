@@ -109,24 +109,50 @@ function buildCalendar() {
 
 		// 히든처리한 input의 class이름을 검색
 		var event = document.getElementsByClassName('event');
-		
+		var member = document.getElementsByClassName('memberName');
+		var vacation = document.getElementsByClassName('vacation');
 		// 일 기준으로 검색후 맞으면 출근을 추가한다.
 		for (var j = 0; j < event.length; j++) {
 			var day = event[j].value.substring(8, 10);
 			var hour = event[j].value.substring(11, 13);
 			var minute = event[j].value.substring(14, 16);
 			var totime = event[j].value.substring(11, 19);
+			var vacationAble = vacation[j].value;
 			
-			if (day == i) {
-				if(hour >= 9 && minute > 0){
-					cell.innerHTML += "<div>지각</div><font color='red'>" + totime + "</font>";
-				}else if(hour == 9 && minute == 0){
-					cell.innerHTML += "<div>출근</div><font color='blue'>" + totime + "</font>";
-				}else{
-					cell.innerHTML += "<div>출근</div><font color='blue'>" + totime + "</font>";
+			if (vacationAble == "false") {
+				if (day == i) {
+					if (hour >= 9 && minute > 0) {
+						var resulthour = hour - 9;
+						var resultminute = minute - 0;
+
+						if (resulthour == 0) {
+							cell.innerHTML += "<div><font color='red'>"
+									+ member[j].value + " " + resultminute
+									+ "분 지각</font></div>";
+						} else {
+							cell.innerHTML += "<div><font color='red'>"
+									+ member[j].value + " " + resulthour
+									+ "시간 " + resultminute
+									+ "분 지각</font></div>";
+						}
+
+					} else if (hour == 9 && minute == 0) {
+						cell.innerHTML += "<div><font color='blue'>"
+								+ member[j].value + " " + totime
+								+ " 출근</font></div>";
+					} else {
+						cell.innerHTML += "<div><font color='blue'>"
+								+ member[j].value + " " + totime
+								+ " 출근</font></div>";
+					}
+				}
+
+			} else {
+				if (day == i) {
+					cell.innerHTML += "<div>"+member[j].value+" 휴가</div>"
 				}
 			}
-			
+
 		}
 	}
 }
@@ -153,7 +179,7 @@ function prevCalendar() {
 
 	// 쿠키에 저장
 	document.cookie = "checkDate" + "=" + checkDate;
-	location.href = "moveCommute.do?checkDate=" + checkDate;
+	location.href = "adminAllCommute.do?checkDate=" + checkDate;
 }
 
 // 다음달
@@ -173,5 +199,5 @@ function nextCalendar() {
 
 	// 쿠키에 저장
 	document.cookie = "checkDate" + "=" + checkDate;
-	location.href = "moveCommute.do?checkDate=" + checkDate;
+	location.href = "adminAllCommute.do?checkDate=" + checkDate;
 }

@@ -9,6 +9,7 @@ import org.apache.ibatis.type.Alias;
 public class Commute {
 	private int commuteNo; //출근 번호
 	private int userNo; //회원번호
+	private String name; //회원 이름
 	private String attend; //출근 시간
 	private String leaved; //퇴근 시간
 	private Boolean vacation; //휴가
@@ -26,6 +27,24 @@ public class Commute {
 		this.attend = attend;
 		this.leaved = leaved;
 		this.vacation = vacation;
+	}
+	
+
+	public Commute(int commuteNo, int userNo, String name, String attend, String leaved, Boolean vacation) {
+		this.commuteNo = commuteNo;
+		this.userNo = userNo;
+		this.name = name;
+		this.attend = attend;
+		this.leaved = leaved;
+		this.vacation = vacation;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getCommuteNo() {

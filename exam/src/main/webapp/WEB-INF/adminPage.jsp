@@ -6,46 +6,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/exam/css/main.css">
-<script type="text/javascript" src="/exam/script/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/exam/css/admin.css">
+<script type="text/javascript" src="/exam/script/admin.js"></script>
 </head>
 <body>
-	<div id="attendview">
-		<c:if test="${loginUser.admin}">
-			<div>
-				<button onclick="location.href='adminAllCommute.do'">관리자모드</button>
-			</div>
-		</c:if>
-		
-		<div>
-			이름 :
-			<input type="text" value="${loginUser.name }" readonly>
-		</div>
-		<div>
-			아이디 :
-			<input type="text" value="${loginUser.id }" name="id" readonly>
-		</div>
-		<div id="formdiv">
-			<form action="attendForm.do">
-				<input type="submit" value="출근">
-			</form>
-
-			<form action="leaveForm.do">
-				<input type="submit" value="퇴근">
-			</form>
-
-			<form action="logout.do">
-				<input type="submit" value="로그아웃">
-			</form>
-		</div>
+	<div class="alignleft">
+		<button class="alignleft" onclick="location.href='moveCommute.do'">메인으로</button>
 	</div>
-
 	<c:forEach var="commutes" items="${commutes}">
 		<c:if test="${!empty commutes}">
 			<input type="hidden" class="event" value="${commutes.getAttend()}">
+			<input type="hidden" class="memberName" value="${commutes.getName()}">
+			<input type="hidden" class="vacation" value="${commutes.getVacation()}">
 		</c:if>
 	</c:forEach>
-
 	<div id="calendardiv">
 		<table id="calendar">
 			<tr>
@@ -67,6 +41,5 @@
 	<script type="text/javascript">
 		buildCalendar();
 	</script>
-
 </body>
 </html>

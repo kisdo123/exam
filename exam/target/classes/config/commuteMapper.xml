@@ -4,9 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Commute.DAO.CommuteMapper">
-	<!-- 회원번호로 insert시 출근시간과 퇴근시간이 insert된다. -->
-	<insert id="insertUserNo" parameterType="int">
-		INSERT INTO commute (userNo) VALUES (#{id}, 1);
+	<!-- 유저객체로 insert시 출근시간과 퇴근시간이 insert된다. -->
+	<insert id="insertUserNo" parameterType="User">
+		INSERT INTO commute (userNo, name) VALUES (#{userNo}, #{name});
 	</insert>
 
 	<!-- 당일 날짜와 회원번호를 기준을 출근 확인한다. -->

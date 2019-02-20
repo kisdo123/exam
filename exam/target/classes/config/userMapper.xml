@@ -12,6 +12,10 @@
 	
 	<!--회원가입 id, pw, name을 입력받아 insert  -->
 	<insert id="joinUser" parameterType="User">
-		insert into user(id, pw, name) values (#{id}, #{pw}, #{name});
+		insert into user(id, pw, name) values (#{id}, MD5(#{pw}), #{name});
 	</insert>
+	<!-- id와 암호화된 pw로 로그인 조회 -->
+	<select id="selectUser" resultType="User" parameterType="User">
+		select * from user where id = #{id} and pw = MD5(#{pw});
+	</select>
 </mapper>

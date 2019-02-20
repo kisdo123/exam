@@ -42,6 +42,12 @@
 		<filter-class>Filter.Login</filter-class>
 	</filter>
 
+	<filter-mapping>
+		<filter-name>Login</filter-name>
+		<url-pattern>/main.do</url-pattern>
+		<url-pattern>/moveCommute.do</url-pattern>
+	</filter-mapping>
+
 	<!-- 로그인 필터 -->
 	<filter>
 		<filter-name>LoginCheck</filter-name>
@@ -49,12 +55,19 @@
 	</filter>
 
 	<filter-mapping>
-		<filter-name>Login</filter-name>
-		<url-pattern>/main.do</url-pattern>
-		<url-pattern>/moveCommute.do</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
 		<filter-name>LoginCheck</filter-name>
 		<url-pattern>/loginForm.do</url-pattern>
+	</filter-mapping>
+
+	<!-- 관리자 필터 -->
+	<filter>
+		<filter-name>Admin</filter-name>
+		<filter-class>Filter.Admin</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Admin</filter-name>
+		<url-pattern>/adminPage.do</url-pattern>
+		<url-pattern>/adminAllCommute.do</url-pattern>
 	</filter-mapping>
 </web-app>

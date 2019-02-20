@@ -10,4 +10,7 @@ public interface UserMapper {
 
 	//insert후 int로 리턴을 받음
 	int joinUser(User user);
+	
+	//id와 암호화된 pw검색
+	User selectUser(User user);
 }

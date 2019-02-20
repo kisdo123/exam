@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin.DAO.AdminMapper">
+
+	<!-- 모든 유저 조회 회원번호, id, name을 조회 -->
+	<select id="adminUserSelect" resultType="User">
+		select userNo, id, name from user;
+	</select>
+	
+	<!-- 모든 출결 조회 출근시간 기준 오름차순 조회 -->
+	<select id="adminCommuteSelect" resultType="Commute">
+		select * from commute order by attend;
+	</select>
+	
+	<!-- 모든유저의 출근일을 년월을 기준으로 검색 -->
+	<select id="adminattendMonth" parameterType="DateData" resultType="Commute">
+		SELECT * FROM commute WHERE year(attend) = #{toYear} and month(attend) = #{toMonth};
+	</select>
+
+	<!--모든유저의 해당날의 출근일을 검색 -->
+	<select id="adminattendDay" parameterType="DateData" resultType="Commute">
+		SELECT * FROM commute WHERE date(attend) = #{toDay};
+	</select>
+</mapper>

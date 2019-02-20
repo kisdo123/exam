@@ -20,4 +20,9 @@ public class UserDAOImpl implements UserDAO {
 		return userMapper.joinUser(user);
 	}
 
+	//로그인을 위해 id와 암호화된 pw로 검색
+	public User selectUser(User user) {
+		return userMapper.selectUser(user);
+	}
+
 }

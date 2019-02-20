@@ -4,10 +4,11 @@ import java.util.List;
 
 import Commute.DTO.Commute;
 import Commute.DTO.DateData;
+import User.DTO.User;
 
 public interface CommuteDAO {
-	//회원번호로 insert
-	public int insertUserNo(int userNo);
+	//유저객체로 insert
+	public int insertUserNo(User user);
 	
 	//퇴근시간 update
 	public int updateleaved(int commuteNo);

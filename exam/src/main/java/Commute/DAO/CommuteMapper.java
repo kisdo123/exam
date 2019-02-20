@@ -5,11 +5,12 @@ import java.util.List;
 import Annotation.Query;
 import Commute.DTO.Commute;
 import Commute.DTO.DateData;
+import User.DTO.User;
 
 @Query
 public interface CommuteMapper {
-	//회원번호로 insert후 int로 결과값을 받음 0실패 1성공 1이상 에러
-	int insertUserNo(int userNo);
+	//User객체로 insert후 int로 결과값을 받음 0실패 1성공 1이상 에러
+	int insertUserNo(User user);
 	
 	//퇴근시간을 현재시간으로 update int로 결과값을 받음 0실패 1성공 1이상 에러
 	int updateleaved(int commuteNo);

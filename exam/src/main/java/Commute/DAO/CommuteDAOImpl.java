@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import Commute.DTO.Commute;
 import Commute.DTO.DateData;
+import User.DTO.User;
 
 @Repository("commuteDAO")
 public class CommuteDAOImpl implements CommuteDAO {
@@ -14,9 +15,9 @@ public class CommuteDAOImpl implements CommuteDAO {
 	@Autowired
 	CommuteMapper commuteMapper;
 
-	//회원번호로 insert
-	public int insertUserNo(int userNo) {
-		return commuteMapper.insertUserNo(userNo);
+	//User객체로 출퇴근 insert
+	public int insertUserNo(User user) {
+		return commuteMapper.insertUserNo(user);
 	}
 
 	//퇴근시간 update

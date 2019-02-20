@@ -20,6 +20,13 @@
 			location.href = "/exam/moveCommute.do";
 		</script>
 	</c:if>
+	
+	<c:if test="${adminFilter }">
+		<script>
+			alert("권한이 없습니다");
+			location.href = "/exam/main.do";
+		</script>
+	</c:if>
 
 	<c:if test="${userExist }">
 		<script>
@@ -30,7 +37,7 @@
 
 	<c:if test="${userNotFound }">
 		<script>
-			alert("유저를 찾을 수 없습니다");
+			alert("유저를 찾을 수 없습니다. 아이디와 비밀번호를 확인해 주세요");
 			location.href = '${ret }';
 		</script>
 	</c:if>
@@ -38,12 +45,6 @@
 	<c:if test="${NotFoundCommtues }">
 		<script>
 			alert("출근 목록을 찾을 수 없습니다");
-			location.href = '${ret }';
-		</script>
-	</c:if>
-	<c:if test="${PasswordNotMatch }">
-		<script>
-			alert("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해 주세요");
 			location.href = '${ret }';
 		</script>
 	</c:if>
