@@ -13,13 +13,19 @@
 	<div class="alignleft">
 		<button class="alignleft" onclick="location.href='moveCommute.do'">메인으로</button>
 	</div>
+
+	<div class="alignleft">
+		<button onclick="location.href='bandForm.do'">밴드에 올리기</button>
+	</div>
+	
 	<c:forEach var="commutes" items="${commutes}">
 		<c:if test="${!empty commutes}">
-			<input type="hidden" class="event" value="${commutes.getAttend()}">
 			<input type="hidden" class="memberName" value="${commutes.getName()}">
+			<input type="hidden" class="event" value="${commutes.getAttend()}">
 			<input type="hidden" class="vacation" value="${commutes.getVacation()}">
 		</c:if>
 	</c:forEach>
+
 	<div id="calendardiv">
 		<table id="calendar">
 			<tr>
@@ -38,6 +44,7 @@
 			</tr>
 		</table>
 	</div>
+
 	<script type="text/javascript">
 		buildCalendar();
 	</script>

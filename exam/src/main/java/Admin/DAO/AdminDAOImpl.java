@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import Admin.DAO.AdminMapper;
+import Admin.DTO.Admin;
 import Commute.DTO.Commute;
 import Commute.DTO.DateData;
 import User.DTO.User;
@@ -24,6 +25,10 @@ public class AdminDAOImpl implements AdminDAO {
 	// 모든 유저의 출근일을 검색후 날짜를 넘겨주고 Commute객체로 돌려받는다.
 	public Commute adminattendDay(DateData dateData) {
 		return adminMapper.adminattendDay(dateData);
+	}
+
+	public List<Admin> adminAttendData() {
+		return adminMapper.adminAttendData();
 	}
 
 }

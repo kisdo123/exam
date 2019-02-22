@@ -16,7 +16,7 @@
 				<button onclick="location.href='adminAllCommute.do'">관리자모드</button>
 			</div>
 		</c:if>
-		
+
 		<div>
 			이름 :
 			<input type="text" value="${loginUser.name }" readonly>
@@ -38,7 +38,9 @@
 				<input type="submit" value="로그아웃">
 			</form>
 		</div>
+		<br>
 	</div>
+
 
 	<c:forEach var="commutes" items="${commutes}">
 		<c:if test="${!empty commutes}">

@@ -2,6 +2,7 @@ package Admin.DAO;
 
 import java.util.List;
 
+import Admin.DTO.Admin;
 import Annotation.Query;
 import Commute.DTO.Commute;
 import Commute.DTO.DateData;
@@ -14,4 +15,6 @@ public interface AdminMapper {
 
 	//모든 유저의 출근일을 검색후 날짜를 넘겨주고 Commute객체로 돌려받는다.
 	Commute adminattendDay(DateData dateData);
+	
+	List<Admin> adminAttendData();
 }

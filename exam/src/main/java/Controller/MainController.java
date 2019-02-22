@@ -1,15 +1,38 @@
 package Controller;
 
+import java.awt.color.CMMException;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.logging.Logger;
 
 import javax.security.auth.login.FailedLoginException;
 import javax.servlet.http.Cookie;
@@ -19,6 +42,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.javassist.runtime.DotClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.config.CronTask;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +55,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mysql.cj.xdevapi.JsonArray;
 
+import Admin.DTO.Admin;
 import Admin.Service.AdminService;
 import Commute.DAO.CommuteDAO;
 import Commute.DTO.Commute;
@@ -55,6 +83,75 @@ public class MainController {
 
 	@Autowired
 	private AdminService adminService;
+
+	
+	@Scheduled(cron = "0 2 18 * * *")
+	public void main() {
+		try {
+			String access_token = "ZQAAAbCOKETePdyxkSVv-Pdqs14uIw12YBTV5mFNpTHLAxbrcXn7PQfSaqCZSPGAi3JBQxzSaOOsZRVo1MOUQhAri1DK8V7_xkQEcnN5KeDuLdWC";
+			String sendToken = "access_token="+URLEncoder.encode(access_token, "UTF-8");
+			String band_key = "AACJ3FlYYxAvdo3pvqiEzAqL";
+			String sendKey = "band_key="+URLEncoder.encode(band_key, "UTF-8");
+			
+			List<Admin> admins = adminService.getAllData();
+			
+			String content = null;
+			for(Admin admin : admins) {
+				content += admin.getName();
+				content += admin.getAttend();
+				content += admin.getVacation();
+				content += admin.getTextData() + "\n";
+			}
+			System.out.println(content);
+			
+			String sendContent = "content="+URLEncoder.encode(content, "UTF-8");
+			
+			URL url = new URL("https://openapi.band.us/v2.2/band/post/create");
+			URLConnection conn = url.openConnection();
+
+			conn.setDoOutput(true);
+			conn.setUseCaches(false);
+			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+			DataOutputStream out = null;
+
+			try {
+				out = new DataOutputStream(conn.getOutputStream());
+				out.writeBytes(sendToken);
+				out.writeBytes(sendKey);
+				out.writeBytes(sendContent);
+				out.flush();
+			} finally {
+				if (out != null)
+					out.close();
+			}
+
+			InputStream is = conn.getInputStream();
+			Scanner scan = new Scanner(is);
+
+			int line = 1;
+			while (scan.hasNext()) {
+				String str = scan.nextLine();
+				System.out.println((line++) + ":" + str);
+			}
+			scan.close();
+
+		} catch (MalformedURLException e) {
+			System.out.println("The URL address is incorrect.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("It can't connect to the web page.");
+			e.printStackTrace();
+		}
+	}
+
+	// 밴드
+	@RequestMapping("/bandForm.do")
+	public String bandForm(Model model) {
+		List<Admin> admins = adminService.getAllData();
+		model.addAttribute("admins", admins);
+		return "bandPage";
+	}
 
 	// loginFilter 결과페이지로 리턴
 	@RequestMapping("/loginFilter.do")
@@ -96,6 +193,7 @@ public class MainController {
 		try {
 			// 아이디와 비밀번호확인후 로그인
 			User loginUser = userService.login(id, pw);
+
 			// 로그인후 세션에 저장
 			request.getSession().setAttribute("loginUser", loginUser);
 			request.setAttribute("login", true);
@@ -184,7 +282,7 @@ public class MainController {
 		User user = new User();
 		user.setUserNo(userNo);
 		user.setName(name);
-		
+
 		try {
 			// 출퇴근 insert
 			Commute comm = commuteService.commuteInsert(user);
@@ -360,4 +458,5 @@ public class MainController {
 			}
 		}
 	}
+
 }

@@ -1,11 +1,13 @@
 package Admin.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Admin.DAO.AdminDAO;
+import Admin.DTO.Admin;
 import Commute.DTO.Commute;
 import Commute.DTO.DateData;
 import User.DTO.User;
@@ -33,4 +35,10 @@ public class AdminServiceImpl implements AdminService {
 		}
 		return commutes;
 	}
+
+	public List<Admin> getAllData() {
+		List<Admin> admin = adminDAO.adminAttendData();
+		return admin;
+	}
+
 }

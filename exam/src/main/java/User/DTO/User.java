@@ -2,6 +2,8 @@ package User.DTO;
 
 import org.apache.ibatis.type.Alias;
 
+import Commute.DTO.Commute;
+
 @Alias("User")
 //회원 관리를 위한 객체
 public class User {
@@ -9,7 +11,7 @@ public class User {
 	private String id; // 회원 id
 	private String pw; // 회원 pw
 	private String name; // 회원 이름
-	private Boolean admin; //관리자 여부
+	private Boolean admin; // 관리자 여부
 
 	public User() {
 

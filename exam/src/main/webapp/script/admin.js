@@ -111,6 +111,7 @@ function buildCalendar() {
 		var event = document.getElementsByClassName('event');
 		var member = document.getElementsByClassName('memberName');
 		var vacation = document.getElementsByClassName('vacation');
+
 		// 일 기준으로 검색후 맞으면 출근을 추가한다.
 		for (var j = 0; j < event.length; j++) {
 			var day = event[j].value.substring(8, 10);
@@ -118,13 +119,18 @@ function buildCalendar() {
 			var minute = event[j].value.substring(14, 16);
 			var totime = event[j].value.substring(11, 19);
 			var vacationAble = vacation[j].value;
-			
+
+			// 휴가 중이 아닐때
 			if (vacationAble == "false") {
+				// 생성하는 날짜와 지정한 날짜가 같을때
 				if (day == i) {
+
+					// 시간이 9이상이고 분이 0이상일때
 					if (hour >= 9 && minute > 0) {
 						var resulthour = hour - 9;
 						var resultminute = minute - 0;
 
+						// resulthour가 9일때
 						if (resulthour == 0) {
 							cell.innerHTML += "<div><font color='red'>"
 									+ member[j].value + " " + resultminute
@@ -136,6 +142,7 @@ function buildCalendar() {
 									+ "분 지각</font></div>";
 						}
 
+						// 시간이 9이고 분이 0일때
 					} else if (hour == 9 && minute == 0) {
 						cell.innerHTML += "<div><font color='blue'>"
 								+ member[j].value + " " + totime
@@ -146,10 +153,11 @@ function buildCalendar() {
 								+ " 출근</font></div>";
 					}
 				}
-
+				
 			} else {
+				// 휴가처리가 되어있으면서 생성한 날짜와 지정한날짜가 같을때
 				if (day == i) {
-					cell.innerHTML += "<div>"+member[j].value+" 휴가</div>"
+					cell.innerHTML += "<div>" + member[j].value + " 휴가</div>"
 				}
 			}
 
